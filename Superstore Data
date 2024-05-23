@@ -1,0 +1,76 @@
+#This project demonstrates the available inventory and rating of various items sold at Superstore.
+
+CREATE TABLE superstore (
+    item_id INTEGER PRIMARY KEY,
+    item_name TEXT,
+    category TEXT,
+    price DECIMAL(10, 2),
+    stock_quantity INTEGER,
+    average_rating DECIMAL(3, 2)
+);
+
+INSERT INTO superstore (item_id, item_name, category, price, stock_quantity, average_rating)
+VALUES
+    (1, 'Stainless Steel Cookware Set', 'Kitchen Supplies', 89.99, 50, 4.6),
+    (2, 'Memory Foam Mattress', 'Furnishings', 499.99, 30, 4.8),
+    (3, 'Smart LED TV', 'Electronics', 549.00, 20, 4.5),
+    (4, 'Robot Vacuum Cleaner', 'Appliances', 199.50, 40, 4.3),
+    (5, 'Wireless Bluetooth Speaker', 'Electronics', 39.99, 60, 4.2),
+    (6, 'Non-Stick Baking Set', 'Kitchen Supplies', 29.95, 80, 4.4),
+    (7, 'Cotton Bedding Set', 'Furnishings', 89.00, 25, 4.7),
+    (8, 'Smart Home Security Camera', 'Electronics', 79.95, 15, 4.1),
+    (9, 'Air Purifier', 'Appliances', 129.50, 35, 4.6),
+    (10, 'Premium Coffee Maker', 'Kitchen Supplies', 79.99, 50, 4.9),
+    (11, 'Ergonomic Office Chair', 'Furnishings', 189.00, 20, 4.5),
+    (12, 'Wireless Earbuds', 'Electronics', 49.99, 75, 4.3),
+    (13, 'Slow Cooker', 'Appliances', 49.95, 30, 4.7),
+    (14, 'Cutlery Set', 'Kitchen Supplies', 34.50, 40, 4.4),
+    (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2),
+    (16, 'Air Fryer', 'Appliances', 79.99, 25, 4.6),
+    (17, 'Electric Kettle', 'Kitchen Supplies', 39.95, 45, 4.5),
+    (18, 'Smartphone Holder', 'Electronics', 14.99, 80, 4.3),
+    (19, 'Comforter Set', 'Furnishings', 129.00, 30, 4.8),
+    (20, 'Rice Cooker', 'Kitchen Supplies', 59.50, 35, 4.4),
+    (21, 'Portable Bluetooth Speaker', 'Electronics', 59.99, 50, 4.7),
+    (22, 'Cordless Vacuum Cleaner', 'Appliances', 149.99, 20, 4.6),
+    (23, 'Stainless Steel Mixing Bowls', 'Kitchen Supplies', 19.95, 60, 4.5),
+    (24, 'Throw Pillow Set', 'Furnishings', 34.99, 40, 4.3),
+    (25, 'Wireless Gaming Mouse', 'Electronics', 49.50, 25, 4.2),
+    (26, 'Coffee Grinder', 'Kitchen Supplies', 29.99, 55, 4.6),
+    (27, 'Desk Lamp', 'Furnishings', 24.50, 70, 4.8),
+    (28, 'Blender', 'Appliances', 79.00, 35, 4.3),
+    (29, 'Portable Power Bank', 'Electronics', 39.95, 40, 4.7),
+    (30, 'Stainless Steel Flatware Set', 'Kitchen Supplies', 29.50, 50, 4.5);
+
+#Display the highest rated item for each category, then have it ordered by descending order
+SELECT category, item_name, average_rating
+FROM superstore
+WHERE (category, average_rating) IN (
+    SELECT category, MAX(average_rating)
+    FROM superstore
+    GROUP BY category)
+ORDER BY average_rating desc
+;
+
+#Display the lowest cost item for each category, then have it ordered by descending order
+SELECT category, item_name, price
+FROM superstore
+WHERE (category, price) IN (
+    SELECT category, MIN(price)
+    FROM superstore
+    GROUP BY category)
+ ORDER BY price desc
+ ;
+
+#Count the number of item types (i.e. item_name) per a category
+SELECT COUNT (item_name), category
+FROM superstore
+GROUP BY category
+;
+
+#Sum of items (stock_quantity) per a category 
+SELECT SUM (stock_quantity), category
+FROM superstore
+GROUP BY category
+;
+
