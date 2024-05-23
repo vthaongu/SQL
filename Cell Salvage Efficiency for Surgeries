@@ -1,0 +1,85 @@
+#This project demonstartes how intraoperative cell salvage techniques may be utilized during surgeries in order to lower blood usage in various surgeries.
+#All data is fictional; no real patient information was used.
+
+CREATE TABLE FAKE_HOSPITAL (
+    MRN INT,
+    full_name TEXT,
+    surgery_type TEXT,
+    blood_ordered INT,
+    blood_returned INT,
+    complications TEXT
+);
+
+INSERT INTO FAKE_HOSPITAL (MRN, full_name, surgery_type, blood_ordered, blood_returned, complications) VALUES
+    (1234567890, 'Smith_John', 'Lung_Transplant', 10, 9, 'None'),
+    (1542686561, 'Johnson_Mary', 'Liver_Transplant', 20, 5, 'Minor'),
+    (1587666446, 'Williams_James', 'CABG', 2, 2, 'None'),
+    (1565621686, 'Brown_Patricia', 'Heart_Transplant', 3, 3, 'None'),
+    (1678946234, 'Jones_Robert', 'CABG', 1, 1, 'None'),
+    (1463134643, 'Miller_Linda', 'Kidney_Transplant', 2, 1, 'None'),
+    (1426463121, 'Davis_Michael', 'CABG', 3, 3, 'None'),
+    (1132114657, 'Garcia_Barbara', 'CABG', 0, 0, 'None'),
+    (1978656748, 'Rodriguez_William', 'Lung_Transplant', 5, 4, 'None'),
+    (1369065959, 'Wilson_Elizabeth', 'Liver_Transplant', 15, 4, 'None'),
+    (1218543790, 'Martinez_David', 'Heart_Transplant', 3, 2, 'None'),
+    (1456786512, 'Anderson_Jennifer', 'CABG', 2, 2, 'None'),
+    (1567890153, 'Taylor_Richard', 'Kidney_Transplant', 2, 1, 'None'),
+    (1678973234, 'Thomas_Susan', 'CABG', 1, 1, 'None'),
+    (1785012345, 'Hernandez_Joseph', 'Lung_Transplant', 10, 8, 'None'),
+    (1845012456, 'Moore_Margaret', 'Liver_Transplant', 10, 3, 'Minor'),
+    (1901234567, 'Martin_Christopher', 'Heart_Transplant', 3, 3, 'None'),
+    (1014323678, 'Jackson_Lisa', 'Kidney_Transplant', 2, 2, 'None'),
+    (1234561890, 'Thompson_Daniel', 'CABG', 0, 0, 'None'),
+    (1324319264, 'White_Nancy', 'Lung_Transplant', 5, 5, 'None'),
+    (1456456012, 'Lopez_Paul', 'Liver_Transplant', 20, 5, 'Minor'),
+    (1546190123, 'Lee_Ruth', 'Heart_Transplant', 3, 3, 'None'),
+    (1678901125, 'Gonzalez_Kevin', 'Kidney_Transplant', 2, 1, 'None'),
+    (1789012465, 'Harris_Betty', 'CABG', 2, 2, 'None'),
+    (1846123456, 'Clark_Kimberly', 'Lung_Transplant', 10, 8, 'None'),
+    (1901534567, 'Lewis_Steven', 'Liver_Transplant', 10, 2, 'None'),
+    (1012205678, 'Robinson_Emily', 'Heart_Transplant', 3, 2, 'None'),
+    (1234566390, 'Walker_Donald', 'Kidney_Transplant', 2, 1, 'None'),
+    (1321816945, 'Perez_Mary', 'CABG', 2, 2, 'None'),
+    (1453789012, 'Hall_Laura', 'Lung_Transplant', 10, 7, 'None'),
+    (1565690123, 'Young_Eric', 'Liver_Transplant', 15, 3, 'Minor'),
+    (1675801234, 'Allen_Michelle', 'Heart_Transplant', 3, 2, 'None'),
+    (1789012345, 'Sanchez_Maria', 'Kidney_Transplant', 2, 1, 'Moderate'),
+    (1890343456, 'Wright_Anthony', 'CABG', 1, 1, 'None'),
+    (1801234567, 'King_Ashley', 'Lung_Transplant', 5, 4, 'None'),
+    (1012344678, 'Scott_David', 'Liver_Transplant', 15, 3, 'Minor'),
+    (1234564690, 'Green_Linda', 'Heart_Transplant', 3, 3, 'None'),
+    (1211054007, 'Baker_Jonathan', 'Kidney_Transplant', 2, 1, 'None'),
+    (1453178912, 'Adams_Cynthia', 'CABG', 2, 2, 'None'),
+    (1567898723, 'Nelson_Matthew', 'Lung_Transplant', 10, 9, 'None'),
+    (1612371234, 'Hill_Karen', 'Liver_Transplant', 20, 5, 'Minor'),
+    (1786412345, 'Ramirez_Jason', 'Heart_Transplant', 3, 2, 'None'),
+    (1901280567, 'Garcia_Barbara', 'Appendectomy', 0, 0, 'None'),
+    (1012343678, 'Rodriguez_William', 'Knee_Replacement', 1, 0, 'None'),
+    (1234567190, 'Wilson_Elizabeth', 'Hernia_Repair', 2, 2, 'None'),
+    (1894023456, 'Campbell_Teresa', 'Kidney_Transplant', 2, 1, 'None'),
+    (1169163463, 'Martinez_David', 'Cataract_Surgery', 2, 2, 'None'),
+    (1456743012, 'Anderson_Jennifer', 'Gallbladder_Removal', 1, 1, 'None'),
+    (1567391923, 'Taylor_Richard', 'Hip_Replacement', 2, 2, 'None'),
+    (1678904334, 'Thomas_Susan', 'Spinal_Fusion', 1, 0, 'None'),
+    (1789082345, 'Hernandez_Joseph', 'Tonsillectomy', 1, 1, 'None'),
+    (1891123456, 'Moore_Margaret', 'Colonoscopy', 0, 0, 'None'
+);
+
+#Determine how many surgeries were performed 
+SELECT COUNT (full_name)
+FROM FAKE_HOSPITAL
+
+#Show blood bags ordered for transplants while displaying only MRN, surgery_type, and blood_ordered.
+SELECT MRN, surgery_type, blood_ordered FROM FAKE_HOSPITAL
+WHERE surgery_type IN ('Liver_Transplant' , 'Lung_Transplant' , 'Heart_Transplant' , 'Kidney_Transplant')
+
+#Sum of all of the blood ordered
+SELECT SUM (blood_ordered)
+FROM FAKE_HOSPITAL
+
+#Sum of all of the blood ordered on 5/14/2024 per a surgery. 
+SELECT SUM (blood_ordered), surgery_type
+FROM FAKE_HOSPITAL
+GROUP BY surgery_type
+
+
